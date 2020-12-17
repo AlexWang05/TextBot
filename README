@@ -1,0 +1,17 @@
+TextBot 0.0.1
+Written and owned by Alex Wang
+
+TextBot is a Discord bot that has many random and weird features.
+
+To invite TextBot to your Discord server, use this link:
+https://discord.com/api/oauth2/authorize?client_id=788652718008827931&permissions=522304&scope=bot
+
+All commands start with 'tb'
+
+Commands:
+    tb help - help menu with information
+    tb say - says random things
+    tb cringe - pings (@mention) some (cringey) person
+    tb ping - spam pings someone
+
+The bot will print "Bot is ready, logged in as TextBox" when it is ready

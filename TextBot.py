@@ -19,11 +19,11 @@ async def on_ready():  # runs when bot is ready
 @client.command()
 async def help(ctx):  # help menu
     # embed message to send back
-    my_embed = discord.Embed(title="TextBot Help Menu", description="Version 0.1.0", color=discord.Color.blue())
+    my_embed = discord.Embed(title="TextBot Help Menu", description="Version 0.0.2", color=discord.Color.blue())
     my_embed.set_footer(text="Hope this helps!")
 
     # fields
-    my_embed.add_field(name="tb ping", value="Spam pings someone", inline=True)
+    my_embed.add_field(name="tb ping @user", value="Spam pings specified user with ping speed 0.3-0.8s", inline=True)
     my_embed.add_field(name="tb cringe", value="Pings the cringiest person on the server!", inline=True)
     my_embed.add_field(name="tb say", value="Says random things", inline=True)
 
@@ -32,19 +32,10 @@ async def help(ctx):  # help menu
 
 @client.command()
 async def say(ctx):  # says random things
-    random_option = random.randint(1, 5)  # random integer
-
-    # random response
-    if random_option == 1:
-        await ctx.send("bruh fr")
-    elif random_option == 2:
-        await ctx.send("what's up")
-    elif random_option == 3:
-        await ctx.send("what do you even want to to say")
-    elif random_option == 4:
-        await ctx.send("uh, okay..?")
-    else:
-        await ctx.send("sup")
+    response_list = ["sup", "what's up", "what do you even want me to say", "bruh",
+                     "okay...?", "yo wassup"]
+    random_option = random.randint(0, len(response_list)-1)  # random integer in list
+    await ctx.send(response_list[random_option])  # sends message
 
 
 @client.command()
@@ -57,12 +48,19 @@ async def ping(ctx):  # spam pings someone
     spam_speed_low = 0.3  # lower spam speed limit
     spam_speed_high = 0.8  # upper spam speed limit
 
-    # generates random speed and
-    for i in range(10):
-        spam_speed = random.uniform(spam_speed_low, spam_speed_high)
-        await ctx.send("<@406236936810921984>")  # pings person
-        time.sleep(spam_speed)  # waits
+    msg = ctx.message.content  # gets user message
+    name = msg.split()  # splits into list
 
+    if len(name) == 3:
+        ping_person = name[2]  # gets index 2 (who to ping)
+
+        # generates random speed and spams
+        for i in range(10):
+            spam_speed = random.uniform(spam_speed_low, spam_speed_high)  # random spam speed
+            await ctx.send(ping_person)  # pings person
+            time.sleep(spam_speed)  # waits the spam speed
+    else:
+        await ctx.send("Incorrect format: tb ping @user")
 
 TOKEN = "ENTER_TOKEN_HERE"
 

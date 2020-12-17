@@ -1,4 +1,4 @@
-TextBot 0.0.1
+TextBot 0.0.2
 Written and owned by Alex Wang
 
 TextBot is a Discord bot that has many random and weird features.
@@ -12,6 +12,6 @@ Commands:
     tb help - help menu with information
     tb say - says random things
     tb cringe - pings (@mention) some (cringey) person
-    tb ping - spam pings someone
+    tb ping @user - spam pings specified user with ping speed 0.3-0.8s
 
 The bot will print "Bot is ready, logged in as TextBox" when it is ready

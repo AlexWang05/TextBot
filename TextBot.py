@@ -1,6 +1,5 @@
 import discord
 from discord.ext import commands
-from discord.utils import get
 import random
 import time
 
@@ -10,7 +9,7 @@ client.remove_command("help")  # removes default help command
 
 @client.event
 async def on_ready():  # runs when bot is ready
-    await client.change_presence(status=discord.Status.idle, activity=discord.Activity(
+    await client.change_presence(status=discord.Status.online, activity=discord.Activity(
         type=discord.ActivityType.listening, name="tb help"
     ))  # sets status of "Listening to tb help"
     print("Bot is ready, logged in as TextBot")
@@ -26,6 +25,7 @@ async def help(ctx):  # help menu
     my_embed.add_field(name="tb ping @user", value="Spam pings specified user with ping speed 0.3-0.8s", inline=True)
     my_embed.add_field(name="tb cringe", value="Pings the cringiest person on the server!", inline=True)
     my_embed.add_field(name="tb say", value="Says random things", inline=True)
+    my_embed.add_field(name="tb pog", value="Tells you if you are poggers", inline=False)
 
     await ctx.send(embed=my_embed)  # sends embedded message
 
@@ -33,8 +33,8 @@ async def help(ctx):  # help menu
 @client.command()
 async def say(ctx):  # says random things
     response_list = ["sup", "what's up", "what do you even want me to say", "bruh",
-                     "okay...?", "yo wassup"]
-    random_option = random.randint(0, len(response_list)-1)  # random integer in list
+                     "okay...?", "yo wassup", "hey how's it going?", "hi"]
+    random_option = random.randint(0, len(response_list) - 1)  # random index in list
     await ctx.send(response_list[random_option])  # sends message
 
 
@@ -61,6 +61,20 @@ async def ping(ctx):  # spam pings someone
             time.sleep(spam_speed)  # waits the spam speed
     else:
         await ctx.send("Incorrect format: tb ping @user")
+
+
+@client.command()
+async def pog(ctx):  # tells someone if they are poggers
+    username = ctx.message.author.id  # gets author's name
+    ping_str = "<@" + str(username) + ">"  # str that pings user
+
+    pog_status = ["not at all", "not really", "kind of", "sort of",
+                  "a little", "pretty", "very", "extremely"]
+    pog_choice = random.randint(0, len(pog_status) - 1)  # random index
+    return_str = ping_str + " is " + pog_status[pog_choice] + " poggers!"
+
+    await ctx.send(return_str)
+
 
 TOKEN = "ENTER_TOKEN_HERE"
 

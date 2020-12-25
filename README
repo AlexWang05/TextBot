@@ -13,5 +13,6 @@ Commands:
     tb say - says random things
     tb cringe - pings (@mention) some (cringey) person
     tb ping @user - spam pings specified user with ping speed 0.3-0.8s
+    tb pog - tells you if you are poggers
 
 The bot will print "Bot is ready, logged in as TextBox" when it is ready

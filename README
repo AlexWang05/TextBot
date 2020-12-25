@@ -2,6 +2,7 @@ TextBot 0.0.2
 Written and owned by Alex Wang
 
 TextBot is a Discord bot that has many random and weird features.
+The bot should be online most of the time with my free heroku server. If it's not, uh... too bad.
 
 To invite TextBot to your Discord server, use this link:
 https://discord.com/api/oauth2/authorize?client_id=788652718008827931&permissions=522304&scope=bot
@@ -16,3 +17,5 @@ Commands:
     tb pog - tells you if you are poggers
 
 The bot will print "Bot is ready, logged in as TextBox" when it is ready
+
+If you're looking for the discord API Token, it's not here. Get your own.

@@ -18,14 +18,17 @@ async def on_ready():  # runs when bot is ready
 @client.command()
 async def help(ctx):  # help menu
     # embed message to send back
-    my_embed = discord.Embed(title="TextBot Help Menu", description="Version 0.0.2", color=discord.Color.blue())
+    my_embed = discord.Embed(title="TextBot Help Menu", description="Version 0.0.3", color=discord.Color.blue())
     my_embed.set_footer(text="Hope this helps!")
 
     # fields
-    my_embed.add_field(name="tb ping @user", value="Spam pings specified user with ping speed 0.3-0.8s", inline=True)
-    my_embed.add_field(name="tb cringe", value="Pings the cringiest person on the server!", inline=True)
-    my_embed.add_field(name="tb say", value="Says random things", inline=True)
-    my_embed.add_field(name="tb pog", value="Tells you if you are poggers", inline=False)
+    my_embed.add_field(name="``tb ping @user``", value="Spam pings specified user with ping speed 0.3-0.8s",
+                       inline=True)
+    my_embed.add_field(name="``tb cringe``", value="Pings the cringiest person on the server!", inline=True)
+    my_embed.add_field(name="``tb say``", value="Says random things", inline=True)
+    my_embed.add_field(name="``tb pog``", value="Tells you if you are poggers", inline=True)
+    my_embed.add_field(name="``tb dm @user message``", value="DM someone with any message using the TextBot account",
+                       inline=True)
 
     await ctx.send(embed=my_embed)  # sends embedded message
 
@@ -74,6 +77,26 @@ async def pog(ctx):  # tells someone if they are poggers
     return_str = ping_str + " is " + pog_status[pog_choice] + " poggers!"
 
     await ctx.send(return_str)
+
+
+@client.command()
+async def dm(ctx):  # sends a dm to someone
+    content = ctx.message.content.split()
+    try:
+        username = ctx.message.mentions[0]  # gets any mentions in message
+    except IndexError:
+        await ctx.send("You forgot to @mention someone! Syntax: ``tb dm @user message``")
+
+    message_to_send = ""
+
+    for i in range(len(content) - 3):  # loops through array after tb & username
+        message_to_send += " " + content[i + 3]  # adds to message
+
+    # noinspection PyBroadException
+    try:
+        await username.send(message_to_send)  # DMs specified user with message
+    except Exception:
+        await ctx.send("I can't send empty messages! Syntax: ``tb dm @user message``")
 
 
 TOKEN = "ENTER_TOKEN_HERE"

@@ -3,7 +3,7 @@ from discord.ext import commands
 import random
 import time
 
-client = commands.Bot(command_prefix="tb ")  # prefix = tb + space
+client = commands.Bot(command_prefix=["tb ", "Tb "])  # prefix = tb + space
 client.remove_command("help")  # removes default help command
 
 
@@ -22,7 +22,7 @@ async def help(ctx):  # help menu
     my_embed.set_footer(text="Hope this helps!")
 
     # fields
-    my_embed.add_field(name="``tb ping @user``", value="Spam pings specified user with ping speed 0.3-0.8s",
+    my_embed.add_field(name="``tb ping @user``", value="Spam pings specified user with ping speed 0.3-0.7s",
                        inline=True)
     my_embed.add_field(name="``tb cringe``", value="Pings the cringiest person on the server!", inline=True)
     my_embed.add_field(name="``tb say``", value="Says random things", inline=True)
@@ -46,24 +46,34 @@ async def cringe(ctx):  # pings person
     await ctx.send("<@598616534222503938> is cringe")  # @pings user, syntax = <@ID>
 
 
+# noinspection PyBroadException
 @client.command()
 async def ping(ctx):  # spam pings someone
     spam_speed_low = 0.3  # lower spam speed limit
-    spam_speed_high = 0.8  # upper spam speed limit
+    spam_speed_high = 0.7  # upper spam speed limit
 
-    msg = ctx.message.content  # gets user message
-    name = msg.split()  # splits into list
+    try:
+        await ctx.channel.purge(limit=1)  # removes last message
+    except Exception:
+        print("no last message to delete before ping command\n")
 
-    if len(name) == 3:
-        ping_person = name[2]  # gets index 2 (who to ping)
+    ping_person = ctx.message.mentions[0]  # gets index 0 of all mentions (who to ping)
+    print(ping_person.id)
 
+    if ping_person.id != 406236936810921984:  # if this user is not being pinged
         # generates random speed and spams
         for i in range(10):
             spam_speed = random.uniform(spam_speed_low, spam_speed_high)  # random spam speed
-            await ctx.send(ping_person)  # pings person
+            await ctx.send("<@" + str(ping_person.id) + ">")  # pings person
+
+            try:
+                await ctx.channel.purge(limit=1)  # removes ping
+            except Exception:
+                print("no last message to delete before ping command\n")
+
             time.sleep(spam_speed)  # waits the spam speed
     else:
-        await ctx.send("Incorrect format: tb ping @user")
+        await ctx.send("You do not have permission to ping the god and the program designer.")
 
 
 @client.command()
@@ -95,9 +105,10 @@ async def dm(ctx):  # sends a dm to someone
     # noinspection PyBroadException
     try:
         await username.send(message_to_send)  # DMs specified user with message
+        await ctx.channel.purge(limit=1)  # removes last message
+        await ctx.send("Message sent.")
     except Exception:
         await ctx.send("I can't send empty messages! Syntax: ``tb dm @user message``")
-
 
 TOKEN = "ENTER_TOKEN_HERE"
 

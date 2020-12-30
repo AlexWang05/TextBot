@@ -57,10 +57,14 @@ async def ping(ctx):  # spam pings someone
     except Exception:
         print("no last message to delete before ping command\n")
 
-    ping_person = ctx.message.mentions[0]  # gets index 0 of all mentions (who to ping)
-    print(ping_person.id)
+    try:
+        ping_person = ctx.message.mentions[0]  # gets index 0 of all mentions (who to ping)
+        person_pinged = True
+    except IndexError:
+        await ctx.send("You forgot to ping someone, syntax: ``tb ping @user``")
+        person_pinged = False
 
-    if ping_person.id != 406236936810921984:  # if this user is not being pinged
+    if person_pinged and ping_person.id != 406236936810921984:  # if this user is not being pinged
         # generates random speed and spams
         for i in range(10):
             spam_speed = random.uniform(spam_speed_low, spam_speed_high)  # random spam speed
@@ -72,7 +76,7 @@ async def ping(ctx):  # spam pings someone
                 print("no last message to delete before ping command\n")
 
             time.sleep(spam_speed)  # waits the spam speed
-    else:
+    elif person_pinged:
         await ctx.send("You do not have permission to ping the god and the program designer.")
 
 
@@ -109,6 +113,7 @@ async def dm(ctx):  # sends a dm to someone
         await ctx.send("Message sent.")
     except Exception:
         await ctx.send("I can't send empty messages! Syntax: ``tb dm @user message``")
+
 
 TOKEN = "ENTER_TOKEN_HERE"
 
